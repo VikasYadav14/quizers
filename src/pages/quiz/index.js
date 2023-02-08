@@ -18,7 +18,7 @@ const Selector = () => {
   }, []);
 
   return (
-    <div className="w-full lg:h-auto p-6">
+    <div className="w-full min-h-screen p-6">
       <div className="max-w-[1240px] m-auto px-2 py-16 w-96 p-2">
         <div>
           <h1 className="text-lg text-gray-500 font-bold text-center m-5">
@@ -28,7 +28,7 @@ const Selector = () => {
         <div
           onClick={() => setOpen(!open)}
           className={`flex items-center justify-center border-2 px-4 py-2 text-sm font-medium text-white hover:text-violet-600 bg-violet-600 rounded-md hover:bg-white hover:border-violet-600 ${
-            !selected && ''
+            !selected
           }`}
         >
           {selected

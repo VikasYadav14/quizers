@@ -1,19 +1,38 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Quiz = () => {
-  const { topic } = useRouter().query;
+  const router = useRouter();
+  const { topic } = router.query;
   const [quizQuestions, setQuizQuestions] = useState([]);
-  const [totalQuestions, setTotalQuestions] = useState()
+  const [totalQuestions, setTotalQuestions] = useState(10);
 
   useEffect(() => {
     async function getData() {
-      try {
-      } catch (error) {}
       const response = await fetch(`/api/getQuestions/${topic}`);
+      if (response.status === 404) {
+        toast('Question Coming Soon', { position: 'bottom-center' });
+        return (
+          <div>
+            <h2 className="text-xl font-bold mb-4">Quiz Completed</h2>
+            <p className="mb-4">
+              Your score is {score}/{quizQuestions.length}
+            </p>
+            <Link
+              className="bg-violet-400 px-4 py-2 rounded-lg hover:bg-violet-500"
+              href="/quiz"
+            >
+              Main Section
+            </Link>
+          </div>
+        );
+      }
       const data = await response.json();
-      setQuizQuestions(data.data);
+      if (data.status === true) {
+        setQuizQuestions(data.questions);
+      }
     }
     getData();
   }, []);
@@ -25,7 +44,6 @@ const Quiz = () => {
   const [minutes, setMinutes] = useState(totalQuestions);
   const [seconds, setSeconds] = useState(0);
   const [isQuizFinished, setIsQuizFinished] = useState(false);
- 
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -67,34 +85,34 @@ const Quiz = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-screen">
       {!quizStart ? (
-        <div className="flex justify-center flex-col justify-center py-10 px-4 sm:px-6 lg:p-10 rounded-sm lg:max-w-md xl:max-w-lg">
+        <div className="flex flex-col justify-center items-center py-10 px-4">
           <h2 className="font-bold text-2xl mb-4">Welcome to the Quiz</h2>
-          <div className="p-2 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5">
+          <div className="p-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-10">
             <button
-              className="bg-violet-400 px-4 py-2 rounded-lg hover:bg-violet-500"
+              className="bg-violet-400 w-72 px-4 py-2 rounded-lg hover:bg-violet-500"
               onClick={() => {
-                setQuizStart(true)
-                setTotalQuestions(10)
+                setQuizStart(true);
+                setTotalQuestions(10);
               }}
             >
               10 Questions
             </button>
             <button
-              className="bg-violet-400 px-4 py-2 rounded-lg hover:bg-violet-500"
+              className="bg-violet-400 w-72 px-4 py-2 rounded-lg hover:bg-violet-500"
               onClick={() => {
-                setQuizStart(true)
-                setTotalQuestions(25)
+                setQuizStart(true);
+                setTotalQuestions(25);
               }}
             >
               25 Questions
             </button>
             <button
-              className="bg-violet-400 px-4 py-2 rounded-lg hover:bg-violet-500"
+              className="bg-violet-400 w-72 px-4 py-2 rounded-lg hover:bg-violet-500"
               onClick={() => {
-                setQuizStart(true)
-                setTotalQuestions(50)
+                setQuizStart(true);
+                setTotalQuestions(50);
               }}
             >
               50 Questions
@@ -121,9 +139,9 @@ const Quiz = () => {
                 </Link>
               </div>
             ) : (
-              <div className="">
+              <div className="lg:w-2/3">
                 <h2 className="text-xl font-bold mb-4 ">
-                  {currentQuestion + 1}.
+                  {currentQuestion + 1}.{' '}
                   {quizQuestions[currentQuestion].question}
                 </h2>
                 <div className="mb-6">
@@ -150,7 +168,11 @@ const Quiz = () => {
                     )
                   )}
                 </div>
-                <p className="mb-4">
+                <p
+                  className={`mb-4 font-bold text-xl ${
+                    minutes < 2 ? 'text-red-500' : 'text-green-400'
+                  }`}
+                >
                   Time remaining: {minutes}:
                   {seconds < 10 ? `0${seconds}` : seconds}
                 </p>
@@ -184,6 +206,7 @@ const Quiz = () => {
           </div>
         </div>
       )}
+      <ToastContainer />
     </div>
   );
 };

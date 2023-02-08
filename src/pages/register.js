@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 
 export default function Register() {
@@ -34,25 +35,33 @@ export default function Register() {
           }),
         }
       );
-      if (response.status === 201) {
-        const data = await response.json();
-        Swal.fire('Register', `${data.message}`, 'success');
+      const data = await response.json();
+      if (data.status === true) {
+        toast.success(data.message, { theme: 'colored' });
         router.push('/login');
       } else {
-        console.log(response);
-        const data = await response.json();
-        console.log(data);
-        Swal.fire('Error', `${data.error}`, 'error');
+        toast.error(data.error, { theme: 'colored' });
       }
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
+      toast.error('Something Went Wrong. Try Again...', { theme: 'colored' });
     }
   };
+
+  useEffect(() => {
+    router.prefetch('/login');
+  });
+
   return (
     <div className="min-w-screen min-h-screen flex items-center justify-center px-5 py-5">
       <div className="md:flex w-auto justify-center ">
         <div className="w-full md:w-full py-10 px-5 md:px-10 ">
-          <div className="text-center mb-10">
+          <Link href="/">
+            <h2 className="text-center text-3xl text-violet-500 hover:text-violet-600 font-bold">
+              Quizers
+            </h2>
+          </Link>
+          <div className="text-center mb-5 pt-10">
             <h1 className="font-bold text-3xl text-gray-900">REGISTER</h1>
             <p>Enter your information to register</p>
             <p class="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
@@ -138,7 +147,8 @@ export default function Register() {
                     className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-violet-500"
                     placeholder="9876543210"
                     required
-                    min={10} max={10}
+                    minLength="10"
+                    maxLength="10"
                     value={mobile}
                     onChange={(e) => setMobile(e.target.value)}
                   />
@@ -179,6 +189,8 @@ export default function Register() {
                     className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-violet-500"
                     placeholder="************"
                     required
+                    minLength="6"
+                    maxLength="15"
                     value={password}
                     onChange={(e) => setPasword(e.target.value)}
                   />
@@ -198,6 +210,7 @@ export default function Register() {
           </form>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

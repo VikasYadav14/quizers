@@ -3,13 +3,13 @@ import homeImage from '@/images/Business_SVG.svg'
 import Link from 'next/link'
 
 const Hero = () => (
-  <section className=" text-gray-800">
+  <section className=" text-gray-800 min-h-screen">
 	<div className="container flex flex-col justify-center p-6 mx-auto sm:py-12 lg:py-24 lg:flex-row lg:justify-around">
 		<div className="flex flex-col justify-center p-6 text-center rounded-sm lg:max-w-md xl:max-w-lg lg:text-left">
 			<h1 className="text-5xl font-bold leading-none sm:text-6xl">Unlock Your
 				<span className="text-violet-400">Potential,</span> Pass Your <span className="text-violet-400">Exams</span>
 			</h1>
-			<p className="mt-6 mb-8 text-lg sm:mb-12">Practice for your government exams
+			<p className="mt-6 mb-8 text-lg sm:mb-12">Practice for your competitive exams
 			<br/>
 				<br className="hidden md:inline lg:hidden"/> Get ready for your exam by practicing with our quiz questions from various subjects.
 			</p>
