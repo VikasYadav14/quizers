@@ -38,7 +38,9 @@ export default function Register() {
       const data = await response.json();
       if (data.status === true) {
         toast.success(data.message, { theme: 'colored' });
-        router.push('/login');
+        setTimeout(() => {
+          router.push('/login');
+        }, 2000);
       } else {
         toast.error(data.error, { theme: 'colored' });
       }
@@ -64,10 +66,10 @@ export default function Register() {
           <div className="text-center mb-5 pt-10">
             <h1 className="font-bold text-3xl text-gray-900">REGISTER</h1>
             <p>Enter your information to register</p>
-            <p class="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+            <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
               Or
               <Link
-                class="font-medium text-violet-400 hover:text-violet-600"
+                className="font-medium text-violet-400 hover:text-violet-600"
                 href="/login"
               >
                 {' '}

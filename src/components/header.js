@@ -1,31 +1,15 @@
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
-import { AiOutlineClose, AiOutlineMail, AiOutlineMenu } from 'react-icons/ai';
-import { BsFillPersonLinesFill } from 'react-icons/bs';
+import { AiOutlineClose, AiOutlineMenu, AiOutlineUser } from 'react-icons/ai';
 import { useRouter } from 'next/router';
+import { toast, ToastContainer } from 'react-toastify';
 
-const Navbar = () => {
+const Navbar = ({ isAuthenticated, user }) => {
   const [nav, setNav] = useState(false);
   const [shadow, setShadow] = useState(false);
   const [navBg, setNavBg] = useState('#ecf0f3');
   const [linkColor, setLinkColor] = useState('#1f2937');
-  // const [position, setPosition] = useState('fixed')
   const router = useRouter();
-
-  useEffect(() => {
-    if (
-      router.asPath === '/blogging' ||
-      router.asPath === '/book-management' ||
-      router.asPath === '/url-shortener' ||
-      router.asPath === '/shopping'
-    ) {
-      setNavBg('transparent');
-      setLinkColor('#ecf0f3');
-    } else {
-      setNavBg('#ecf0f3');
-      setLinkColor('#1f2937');
-    }
-  }, [router]);
 
   const handleNav = () => {
     setNav(!nav);
@@ -58,9 +42,27 @@ const Navbar = () => {
             <li className="p-4 border-b-2 border-violet-500 border-opacity-0 hover:border-opacity-100 hover:text-violet-500 duration-200 cursor-pointer">
               <Link href="/about">About Us</Link>
             </li>
-            <li className="p-4 border-b-2 border-violet-500 border-opacity-0 hover:border-opacity-100 hover:text-violet-500 duration-200 cursor-pointer">
-              <Link href="/login">Login</Link>
-            </li>
+            {isAuthenticated ? (
+              <>
+                <li
+                  onClick={() => {
+                    localStorage.clear();
+                    toast.error('Logout');
+                    setTimeout(() => {
+                      router.push('/');
+                    }, 2000);
+                  }}
+                  className="flex justify-between p-4 border-b-2 text-violet-500 font-semibold border-red-500 border-opacity-0 hover:border-opacity-100 hover:text-red-500 duration-200 cursor-pointer"
+                >
+                  <AiOutlineUser className="w-5 h-5" title="user" />
+                  <p className="pl-2">{user}</p>
+                </li>
+              </>
+            ) : (
+              <li className="p-4 border-b-2 border-violet-500 border-opacity-0 hover:border-opacity-100 hover:text-violet-500 duration-200 cursor-pointer">
+                <Link href="/login">Login</Link>
+              </li>
+            )}
           </ul>
           {/* Hamburger Icon */}
           <div
@@ -84,14 +86,17 @@ const Navbar = () => {
         <div
           className={
             nav
-              ? ' fixed left-0 top-0 w-[75%] sm:w-[60%] md:w-[45%] h-screen bg-[#ecf0f3] p-10 ease-in duration-500'
+              ? ' fixed left-0 top-0 w-[75%] sm:w-[60%] md:w-[45%] h-screen bg-white p-10 ease-in duration-500'
               : 'fixed left-[-100%] top-0 p-10 ease-in duration-500'
           }
         >
           <div>
             <div className="flex w-full items-center justify-between">
               <Link href="/">
-                <h2 className="text-violet-500 hover:text-violet-600 font-bold text-2xl">
+                <h2
+                  onClick={() => setNav(false)}
+                  className="text-violet-500 hover:text-violet-600 font-bold text-2xl"
+                >
                   Quizers
                 </h2>
               </Link>
@@ -104,12 +109,16 @@ const Navbar = () => {
             </div>
             <div className="border-b border-gray-300 my-4">
               <p className="w-[85%] md:w-[90%] py-4">
-                Let&#39;s build something legendary together
+                Aim High, Excel Beyond Limits.
               </p>
+            </div>
+            <div className="flex text-violet-600 font-semibold border-b border-gray-300 my-4">
+            <AiOutlineUser className="w-5 h-5" title="user" />
+                  <p className="pl-2">{user}</p>
             </div>
           </div>
           <div className="py-4 flex flex-col">
-            <ul className="p-4 border-b-2 border-violet-500 border-opacity-0 hover:border-opacity-100 hover:text-violet-500 duration-200 cursor-pointer">
+            <ul className="p-4 border-b-2">
               <Link href="/">
                 <li onClick={() => setNav(false)} className="py-4 text-sm">
                   Home
@@ -120,15 +129,28 @@ const Navbar = () => {
                   About Us
                 </li>
               </Link>
-              <Link href="/login">
-                <li onClick={() => setNav(false)} className="py-4 text-sm">
-                  Login
+              {isAuthenticated ? (
+                <li
+                  onClick={() => {
+                    localStorage.clear();
+                    router.push('/');
+                  }}
+                  className="py-4 text-sm"
+                >
+                  LogOut
                 </li>
-              </Link>
+              ) : (
+                <Link href="/login">
+                  <li onClick={() => setNav(false)} className="py-4 text-sm">
+                    Login
+                  </li>
+                </Link>
+              )}
             </ul>
           </div>
         </div>
       </div>
+      <ToastContainer />
     </header>
   );
 };

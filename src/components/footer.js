@@ -4,10 +4,10 @@ import React from 'react';
 const Footer = () => (
   <footer className="bg-gray-700 py-10">
     <div className="container mx-auto">
-      <div className="flex items-center justify-between p-10">
+      <div className="flex items-center text-center justify-between p-10">
         <div>
           <Link href="/">
-            <h2 className="text-center text-3xl text-violet-500 hover:text-violet-400 font-bold">
+            <h2 className="text-3xl text-violet-500 hover:text-violet-400 font-bold">
               Quizers
             </h2>
           </Link>

@@ -7,8 +7,8 @@ import { ToastContainer, toast } from 'react-toastify';
 
 export default function Login() {
   const router = useRouter();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,8 +27,11 @@ export default function Login() {
       const data = await response.json();
       if (data.status === true) {
         toast.success(data.message, { theme: 'colored' });
-        localStorage.set('token',data.token)
-        router.push('/');
+        localStorage.setItem('token',data.token)
+        localStorage.setItem('fname',data.fname)
+        setTimeout(() => {
+          router.push('/')
+        }, 2000);
       } else {
         toast.error(data.error, { theme: 'colored' });
       }
@@ -76,7 +79,7 @@ export default function Login() {
                 type="email"
                 autoComplete="email"
                 required
-                className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-violet-500 focus:outline-none focus:ring-violet-500 sm:text-sm"
+                className="block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-violet-500 focus:outline-none focus:ring-violet-500 sm:text-sm"
                 placeholder="Email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -90,7 +93,7 @@ export default function Login() {
                 type="password"
                 autoComplete="current-password"
                 required
-                className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-violet-500 focus:outline-none focus:ring-violet-500 sm:text-sm"
+                className="block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-violet-500 focus:outline-none focus:ring-violet-500 sm:text-sm"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -126,15 +129,15 @@ export default function Login() {
           <div>
             <button
               type="submit"
-              className="group relative flex w-full justify-center rounded-md border border-transparent bg-violet-600 py-2 px-4 text-sm font-medium text-white hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2"
+              className="flex w-full justify-center rounded-md border border-transparent bg-violet-600 py-2 px-4 text-sm font-medium text-white hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2"
             >
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+              <span className="flex items-left pl-3">
                 <FaLock
                   className="h-5 w-5 text-violet-500 group-hover:text-violet-400"
                   aria-hidden="true"
                 />
               </span>
-              Log in
+              Secure Login
             </button>
           </div>
         </form>

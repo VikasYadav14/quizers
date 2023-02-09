@@ -22,7 +22,7 @@ const login = async function (req, res) {
       process.env.JWT_SecretKey,
       { expiresIn: '1d' }
     );
-    return res.status(200).send({status:true, token, message:"Successfully Login" });
+    return res.status(200).send({status:true, token,fname:checkData.fname, message:"Successfully Login" });
   } catch (error) {
     return res.status(500).send({ status: false, error: error.message });
   }
