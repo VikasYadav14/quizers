@@ -3,12 +3,13 @@ import { BiChevronDown } from 'react-icons/bi';
 import { AiOutlineSearch } from 'react-icons/ai';
 import Link from 'next/link';
 
-const Selector = () => {
+const Selector = (props) => {
   const [inputValue, setInputValue] = useState('');
   const [selected, setSelected] = useState('');
   const [open, setOpen] = useState(false);
   const [allData, setAllData] = useState();
 
+  
   useEffect(() => {
     fetch(`/api/getSubject`)
       .then((res) => res.json())

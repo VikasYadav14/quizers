@@ -36,7 +36,6 @@ export default function Login() {
         toast.error(data.error, { theme: 'colored' });
       }
     } catch (err) {
-      console.log(err.message)
       toast.error('Something Went Wrong. Try Again...', { theme: 'colored' });
     }
   };
@@ -131,12 +130,10 @@ export default function Login() {
               type="submit"
               className="flex w-full justify-center rounded-md border border-transparent bg-violet-600 py-2 px-4 text-sm font-medium text-white hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2"
             >
-              <span className="flex items-left pl-3">
                 <FaLock
                   className="h-5 w-5 text-violet-500 group-hover:text-violet-400"
                   aria-hidden="true"
                 />
-              </span>
               Secure Login
             </button>
           </div>

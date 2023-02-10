@@ -15,7 +15,6 @@ export default function Register() {
 
   let handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(fname, lname, gender, mobile, email, password);
     try {
       const response = await fetch(
         'https://backend-rankers.vercel.app/api/createUser',
@@ -45,7 +44,6 @@ export default function Register() {
         toast.error(data.error, { theme: 'colored' });
       }
     } catch (err) {
-      console.log(err.message);
       toast.error('Something Went Wrong. Try Again...', { theme: 'colored' });
     }
   };

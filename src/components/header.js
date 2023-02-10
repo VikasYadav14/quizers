@@ -4,11 +4,10 @@ import { AiOutlineClose, AiOutlineMenu, AiOutlineUser } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { toast, ToastContainer } from 'react-toastify';
 
-const Navbar = ({ isAuthenticated, user }) => {
+const Navbar = ({ isAuthenticated, user, logout }) => {
   const [nav, setNav] = useState(false);
   const [shadow, setShadow] = useState(false);
-  const [navBg, setNavBg] = useState('#ecf0f3');
-  const [linkColor, setLinkColor] = useState('#1f2937');
+  const [dropdown, setDropdown] = useState(false);
   const router = useRouter();
 
   const handleNav = () => {
@@ -35,29 +34,52 @@ const Navbar = ({ isAuthenticated, user }) => {
           </h2>
         </Link>
         <div>
-          <ul style={{ color: `${linkColor}` }} className="hidden md:flex">
+          <ul className="hidden md:flex">
             <li className="p-4 border-b-2 border-violet-500 border-opacity-0 hover:border-opacity-100 hover:text-violet-500 duration-200 cursor-pointer">
               <Link href="/">Home</Link>
             </li>
             <li className="p-4 border-b-2 border-violet-500 border-opacity-0 hover:border-opacity-100 hover:text-violet-500 duration-200 cursor-pointer">
               <Link href="/about">About Us</Link>
             </li>
+            <div>
+              <a></a>
+            </div>
             {isAuthenticated ? (
-              <>
-                <li
-                  onClick={() => {
-                    localStorage.clear();
-                    toast.error('Logout');
-                    setTimeout(() => {
-                      router.push('/');
-                    }, 2000);
-                  }}
-                  className="flex justify-between p-4 border-b-2 text-violet-500 font-semibold border-red-500 border-opacity-0 hover:border-opacity-100 hover:text-red-500 duration-200 cursor-pointer"
-                >
-                  <AiOutlineUser className="w-5 h-5" title="user" />
-                  <p className="pl-2">{user}</p>
-                </li>
-              </>
+              <li
+                onMouseOver={() => {
+                  setDropdown(true);
+                }}
+                onMouseLeave={() => {
+                  setDropdown(false);
+                }}
+                className="p-4 border-b-2 border-violet-500 border-opacity-0 hover:border-opacity-100 hover:text-violet-500 duration-200 cursor-pointer"
+              >
+                {dropdown && (
+                  <div
+                    onMouseOver={() => {
+                      setDropdown(true);
+                    }}
+                    onMouseLeave={() => {
+                      setDropdown(false);
+                    }}
+                    className="absolute right-14 text-gray-800 border-2 font-medium bg-white top-10 rounded-md px-5 w-24"
+                  >
+                    <ul><Link href='/profile'>
+                      <li className="py-1 hover:text-violet-600 text-sm">
+                        {user}
+                      </li></Link>
+                      <li
+                        onClick={logout}
+
+                        className="py-1 hover:text-violet-600 text-sm"
+                      >
+                        Logout
+                      </li>
+                    </ul>
+                  </div>
+                )}
+                <AiOutlineUser className="w-5 h-5" title="user" />
+              </li>
             ) : (
               <li className="p-4 border-b-2 border-violet-500 border-opacity-0 hover:border-opacity-100 hover:text-violet-500 duration-200 cursor-pointer">
                 <Link href="/login">Login</Link>
@@ -66,7 +88,6 @@ const Navbar = ({ isAuthenticated, user }) => {
           </ul>
           {/* Hamburger Icon */}
           <div
-            style={{ color: `${linkColor}` }}
             onClick={handleNav}
             className="md:hidden"
           >
@@ -112,10 +133,14 @@ const Navbar = ({ isAuthenticated, user }) => {
                 Aim High, Excel Beyond Limits.
               </p>
             </div>
-            <div className="flex text-violet-600 font-semibold border-b border-gray-300 my-4">
-            <AiOutlineUser className="w-5 h-5" title="user" />
+            {isAuthenticated && (
+              <>
+                <div className="flex text-violet-600 font-semibold border-b border-gray-300 my-4">
+                  <AiOutlineUser className="w-5 h-5" title="user" />
                   <p className="pl-2">{user}</p>
-            </div>
+                </div>
+              </>
+            )}
           </div>
           <div className="py-4 flex flex-col">
             <ul className="p-4 border-b-2">
@@ -130,13 +155,7 @@ const Navbar = ({ isAuthenticated, user }) => {
                 </li>
               </Link>
               {isAuthenticated ? (
-                <li
-                  onClick={() => {
-                    localStorage.clear();
-                    router.push('/');
-                  }}
-                  className="py-4 text-sm"
-                >
+                <li onClick={logout} className="py-4 text-sm">
                   LogOut
                 </li>
               ) : (

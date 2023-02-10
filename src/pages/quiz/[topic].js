@@ -139,7 +139,7 @@ const Quiz = () => {
                 </Link>
               </div>
             ) : (
-              <div className="lg:w-2/3">
+              <div className="lg:w-2/3 w-full">
                 <h2 className="text-xl font-bold mb-4 ">
                   {currentQuestion + 1}.{' '}
                   {quizQuestions[currentQuestion].question}
