@@ -16,24 +16,21 @@ export default function Register() {
   let handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        'https://backend-rankers.vercel.app/api/createUser',
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-type': 'application/json; charset=UTF-8',
-          },
-          body: JSON.stringify({
-            fname: fname,
-            lname: lname,
-            gender: gender,
-            mobile: mobile,
-            email: email,
-            password: password,
-          }),
-        }
-      );
+      const response = await fetch('/api/user/addUser', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+        body: JSON.stringify({
+          fname: fname,
+          lname: lname,
+          gender: gender,
+          mobile: mobile,
+          email: email,
+          password: password,
+        }),
+      });
       const data = await response.json();
       if (data.status === true) {
         toast.success(data.message, { theme: 'colored' });
@@ -70,8 +67,7 @@ export default function Register() {
                 className="font-medium text-violet-400 hover:text-violet-600"
                 href="/login"
               >
-                {' '}
-                Log In{' '}
+                Log In
               </Link>
             </p>
           </div>

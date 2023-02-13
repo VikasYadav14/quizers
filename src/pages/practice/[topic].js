@@ -22,7 +22,7 @@ const Quiz = () => {
             </p>
             <Link
               className="bg-violet-400 px-4 py-2 rounded-lg hover:bg-violet-500"
-              href="/quiz"
+              href="/practice"
             >
               Main Section
             </Link>
@@ -133,7 +133,7 @@ const Quiz = () => {
                 </p>
                 <Link
                   className="bg-violet-400 px-4 py-2 rounded-lg hover:bg-violet-500"
-                  href="/quiz"
+                  href="/practice"
                 >
                   Main Section
                 </Link>
@@ -168,14 +168,16 @@ const Quiz = () => {
                     )
                   )}
                 </div>
+                <div className=''>
                 <p
-                  className={`mb-4 font-bold text-xl ${
+                  className={`mb-4 font-bold text-3xl ${
                     minutes < 2 ? 'text-red-500' : 'text-green-400'
                   }`}
                 >
-                  Time remaining: {minutes}:
+                  {minutes}:
                   {seconds < 10 ? `0${seconds}` : seconds}
                 </p>
+                </div>
                 <div className="flex justify-between">
                   {currentQuestion > 0 && (
                     <button

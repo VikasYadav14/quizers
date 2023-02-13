@@ -1,29 +1,13 @@
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import { AiOutlineClose, AiOutlineMenu, AiOutlineUser } from 'react-icons/ai';
-import { useRouter } from 'next/router';
-import { toast, ToastContainer } from 'react-toastify';
 
-const Navbar = ({ isAuthenticated, user, logout }) => {
+const Navbar = () => {
   const [nav, setNav] = useState(false);
-  const [shadow, setShadow] = useState(false);
-  const [dropdown, setDropdown] = useState(false);
-  const router = useRouter();
 
   const handleNav = () => {
     setNav(!nav);
   };
-
-  useEffect(() => {
-    const handleShadow = () => {
-      if (window.scrollY >= 90) {
-        setShadow(true);
-      } else {
-        setShadow(false);
-      }
-    };
-    window.addEventListener('scroll', handleShadow);
-  }, []);
 
   return (
     <header className="header sticky top-0 bg-white shadow-md flex items-center justify-between px-8 py-02">
@@ -41,56 +25,12 @@ const Navbar = ({ isAuthenticated, user, logout }) => {
             <li className="p-4 border-b-2 border-violet-500 border-opacity-0 hover:border-opacity-100 hover:text-violet-500 duration-200 cursor-pointer">
               <Link href="/about">About Us</Link>
             </li>
-            <div>
-              <a></a>
-            </div>
-            {isAuthenticated ? (
-              <li
-                onMouseOver={() => {
-                  setDropdown(true);
-                }}
-                onMouseLeave={() => {
-                  setDropdown(false);
-                }}
-                className="p-4 border-b-2 border-violet-500 border-opacity-0 hover:border-opacity-100 hover:text-violet-500 duration-200 cursor-pointer"
-              >
-                {dropdown && (
-                  <div
-                    onMouseOver={() => {
-                      setDropdown(true);
-                    }}
-                    onMouseLeave={() => {
-                      setDropdown(false);
-                    }}
-                    className="absolute right-14 text-gray-800 border-2 font-medium bg-white top-10 rounded-md px-5 w-24"
-                  >
-                    <ul><Link href='/profile'>
-                      <li className="py-1 hover:text-violet-600 text-sm">
-                        {user}
-                      </li></Link>
-                      <li
-                        onClick={logout}
-
-                        className="py-1 hover:text-violet-600 text-sm"
-                      >
-                        Logout
-                      </li>
-                    </ul>
-                  </div>
-                )}
-                <AiOutlineUser className="w-5 h-5" title="user" />
-              </li>
-            ) : (
-              <li className="p-4 border-b-2 border-violet-500 border-opacity-0 hover:border-opacity-100 hover:text-violet-500 duration-200 cursor-pointer">
-                <Link href="/login">Login</Link>
-              </li>
-            )}
+            <li className="p-4 border-b-2 border-violet-500 border-opacity-0 hover:border-opacity-100 hover:text-violet-500 duration-200 cursor-pointer">
+              <Link href="/login">Login</Link>
+            </li>
           </ul>
           {/* Hamburger Icon */}
-          <div
-            onClick={handleNav}
-            className="md:hidden"
-          >
+          <div onClick={handleNav} className="md:hidden">
             <AiOutlineMenu size={25} />
           </div>
         </div>
@@ -133,14 +73,6 @@ const Navbar = ({ isAuthenticated, user, logout }) => {
                 Aim High, Excel Beyond Limits.
               </p>
             </div>
-            {isAuthenticated && (
-              <>
-                <div className="flex text-violet-600 font-semibold border-b border-gray-300 my-4">
-                  <AiOutlineUser className="w-5 h-5" title="user" />
-                  <p className="pl-2">{user}</p>
-                </div>
-              </>
-            )}
           </div>
           <div className="py-4 flex flex-col">
             <ul className="p-4 border-b-2">
@@ -154,22 +86,15 @@ const Navbar = ({ isAuthenticated, user, logout }) => {
                   About Us
                 </li>
               </Link>
-              {isAuthenticated ? (
-                <li onClick={logout} className="py-4 text-sm">
-                  LogOut
+              <Link href="/login">
+                <li onClick={() => setNav(false)} className="py-4 text-sm">
+                  Login
                 </li>
-              ) : (
-                <Link href="/login">
-                  <li onClick={() => setNav(false)} className="py-4 text-sm">
-                    Login
-                  </li>
-                </Link>
-              )}
+              </Link>
             </ul>
           </div>
         </div>
       </div>
-      <ToastContainer />
     </header>
   );
 };

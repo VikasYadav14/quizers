@@ -7,8 +7,8 @@ import { ToastContainer, toast } from 'react-toastify';
 
 export default function Login() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,10 +27,11 @@ export default function Login() {
       const data = await response.json();
       if (data.status === true) {
         toast.success(data.message, { theme: 'colored' });
-        localStorage.setItem('token',data.token)
-        localStorage.setItem('fname',data.fname)
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('fname', data.fname);
+        localStorage.setItem('email',data.email)
         setTimeout(() => {
-          router.push('/')
+          router.push('/dashboard');
         }, 2000);
       } else {
         toast.error(data.error, { theme: 'colored' });
@@ -41,7 +42,7 @@ export default function Login() {
   };
 
   useEffect(() => {
-    router.prefetch('/');
+    router.prefetch('/dashboard');
   });
 
   return (
@@ -62,8 +63,7 @@ export default function Login() {
               className="font-medium text-violet-600 hover:text-violet-500"
               href="/register"
             >
-              {' '}
-              Register{' '}
+              Register
             </Link>
           </p>
         </div>
@@ -130,10 +130,10 @@ export default function Login() {
               type="submit"
               className="flex w-full justify-center rounded-md border border-transparent bg-violet-600 py-2 px-4 text-sm font-medium text-white hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2"
             >
-                <FaLock
-                  className="h-5 w-5 text-violet-500 group-hover:text-violet-400"
-                  aria-hidden="true"
-                />
+              <FaLock
+                className="h-5 w-5 text-violet-500 group-hover:text-violet-400"
+                aria-hidden="true"
+              />
               Secure Login
             </button>
           </div>

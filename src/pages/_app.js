@@ -6,40 +6,53 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import Head from 'next/head';
+import Layout from '@/components/layout';
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState('');
-  const [user, setUser] = useState('')
+  const [user, setUser] = useState('');
   const [key, setKey] = useState();
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    const fname = localStorage.getItem('fname')
+    const token = localStorage.getItem('token');
+    const fname = localStorage.getItem('fname');
     if (token) {
-      setIsAuthenticated(token)
-      setUser(fname)
-      setKey(Math.random())
+      setIsAuthenticated(token);
+      setUser(fname);
+      setKey(Math.random());
     }
-  }, [router.query])
+  }, [router.query]);
 
   const logout = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('fname')
-    setIsAuthenticated('')
-    setUser('')
-    setKey(Math.random())
-    router.push('/')
-  }
+    localStorage.removeItem('token');
+    localStorage.removeItem('fname');
+    setIsAuthenticated('');
+    setUser('');
+    setKey(Math.random());
+    router.push('/');
+  };
 
   return (
-    <><Head>
-    <title>Quizers | Practice from Quizs</title>
-    <meta name="description" content="Practice for your competitive exams" />
-    <link rel="icon" href='/Qlogo.png' />
-  </Head>
-      <Navbar isAuthenticated={isAuthenticated} key={key} user={user} logout={logout} />
-      <Component {...pageProps} />
-      <Footer />
+    <>
+      <Head>
+        <title>Quizers | Practice from Quizs</title>
+        <meta
+          name="description"
+          content="Practice for your competitive exams"
+        />
+        <link rel="icon" href="/Qlogo.png" />
+      </Head>
+      {isAuthenticated ? (
+        <Layout logout={logout} user={user}>
+          <Component {...pageProps} />
+        </Layout>
+      ) : (
+        <>
+          <Navbar />
+          <Component {...pageProps} />
+          <Footer />
+        </>
+      )}
     </>
   );
 }

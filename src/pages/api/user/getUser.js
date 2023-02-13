@@ -1,16 +1,16 @@
-import subjectModel from '@/models/subject';
+import userModel from '@/models/user';
 import connectDB from '@/middleware/mongodb';
 
 export default connectDB(async (req, res) => {
   try {
-    const subjects = await subjectModel.find();
-    if (!subjects.length) {
+    const user = await userModel.find();
+    if (!user.length) {
       return res.status(404).send({
         status: false,
         error: 'No data Found',
       });
     }
-    return res.status(200).send(subjects);
+    return res.status(200).send({status:true,user});
   } catch (error) {
     return res.status(500).send({ status: false, error: error.message });
   }

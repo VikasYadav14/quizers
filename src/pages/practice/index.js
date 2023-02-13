@@ -8,15 +8,21 @@ const Selector = (props) => {
   const [selected, setSelected] = useState('');
   const [open, setOpen] = useState(false);
   const [allData, setAllData] = useState();
+  const [isLoading, setIsLoading] = useState(false)
 
   
   useEffect(() => {
+    setIsLoading(true)
     fetch(`/api/getSubject`)
       .then((res) => res.json())
       .then((data) => {
         setAllData(data);
+        setIsLoading(false)
       });
   }, []);
+
+  if (isLoading) return <p>Loading...</p>
+
 
   return (
     <div className="w-full min-h-screen p-6">
@@ -94,7 +100,7 @@ const Selector = (props) => {
                       {sub.topics.map((category, index) => {
                         return (
                           <Link
-                          href={`/quiz/${category
+                          href={`/practice/${category
                             .toLowerCase()
                             .replace(' ', '-')}`}
                             key={index} className='border-white border-2 rounded-2xl hover:border-violet-600 text-lg font-medium text-violet-400 hover:text-violet-600'

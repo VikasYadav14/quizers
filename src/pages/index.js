@@ -14,8 +14,8 @@ const Hero = () => (
 				<br className="hidden md:inline lg:hidden"/> Get ready for your exam by practicing with our quiz questions from various subjects.
 			</p>
 			<div className="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start">
-				<Link rel="noopener noreferrer" href="/quiz" className="px-8 py-3 text-lg font-semibold rounded bg-violet-400 text-gray-900 hover:bg-violet-600 hover:text-white">Quiz</Link>
-				<Link rel="noopener noreferrer" href="/register" className="px-8 py-3 text-lg font-semibold border-2 rounded border-gray-100 hover:text-violet-600 hover:border-violet-600">Register</Link>
+				<Link rel="noopener noreferrer" href="/register" className="px-8 py-3 text-lg font-semibold rounded bg-violet-400 text-violet-900 hover:bg-violet-600 hover:text-white">Register</Link>
+				<Link rel="noopener noreferrer" href="/login" className="px-8 py-3 text-lg font-semibold border-2 rounded border-gray-100 hover:text-violet-600 hover:border-violet-600">login</Link>
 			</div>
 		</div>
 		<div className="flex items-center justify-center p-6 mt-8 lg:mt-0 h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128">
