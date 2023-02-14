@@ -20,8 +20,15 @@ export default function App({ Component, pageProps }) {
       setIsAuthenticated(token);
       setUser(fname);
       setKey(Math.random());
+      if (
+        router.pathname === '/' ||
+        router.pathname === '/login' ||
+        router.pathname === '/register'
+      ) {
+        router.push('/dashboard');
+      }
     }
-  }, [router.query]);
+  }, [router]);
 
   const logout = () => {
     localStorage.removeItem('token');
