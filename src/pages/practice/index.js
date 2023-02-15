@@ -15,7 +15,6 @@ function Practice() {
         setIsLoading(false);
       });
   }, []);
-  console.log(allData);
   if (isLoading) return <p>Loading...</p>;
   return (
     <div>
@@ -45,7 +44,7 @@ function Practice() {
                         {selected} Topics
                       </h2>
                       <div className="flex flex-col">
-                        <div className="p-2 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 bg-white rounded-2xl">
+                        <div className="p-2 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5 bg-white rounded-2xl">
                           {sub.topics.map((category, index) => {
                             return (
                               <Link
